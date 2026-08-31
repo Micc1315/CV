@@ -224,11 +224,47 @@ ul li::before {
     .grid-2 { grid-template-columns: 1fr; gap: 20px; }
 }
 
+/* 📥 ADVANCED PRINT GEOMETRY OVERRIDES */
+@page {
+    size: A4 portrait;
+    margin: 12mm 15mm 12mm 15mm; /* Eliminates browser header/footer clipping */
+}
+
 @media print {
-    body { background-color: #fff; padding: 0; }
-    .resume-container { box-shadow: none; border: none; padding: 0; }
-    .tag { border: 1px solid #cbd5e1; }
-    .skills-group { background-color: #f8fafc; print-color-adjust: exact; }
+    body { 
+        background-color: #ffffff; 
+        padding: 0;
+        margin: 0;
+        -webkit-print-color-adjust: exact; /* Locks background tint in Chrome/Safari */
+        print-color-adjust: exact;         /* Locks background tint in Firefox */
+    }
     
-    .download-btn { display: none !important; } 
+    .resume-container { 
+        box-shadow: none; 
+        border: none; 
+        padding: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .grid-2 {
+        display: flex; /* Uses standard flex layout alignment on paper */
+        justify-content: space-between;
+        gap: 25px;
+    }
+
+    .left-column {
+        width: 58%;
+        flex-shrink: 0;
+    }
+
+    .right-column {
+        width: 40%;
+        flex-shrink: 0;
+    }
+
+    .tag { border: 1px solid #cbd5e1; }
+    .skills-group { background-color: var(--bg-accent) !important; }
+    .gpa-badge { background-color: var(--primary-color) !important; color: white !important; }
+    .download-btn { display: none !important; } /* Erases action button from printed paper */
 }
